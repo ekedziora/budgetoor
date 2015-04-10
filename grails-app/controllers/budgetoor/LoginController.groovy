@@ -25,7 +25,7 @@ class LoginController {
             redirect(action: "sample")
         }
         else {
-            redirect(action: "login")
+            chain(action: "login", model: [messages: ['Podano błędną parę login/hasło']])
         }
     }
 
