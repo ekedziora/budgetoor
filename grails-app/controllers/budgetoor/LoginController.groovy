@@ -25,7 +25,15 @@ class LoginController {
             redirect(action: "sample")
         }
         else {
-            chain(action: "login", model: [messages: ['Podano błędną parę login/hasło']])
+            redirect(action: "login")
+            flash.message = message(code: 'login.bad.credentials')
+        }
+    }
+
+    def logout() {
+        if(session.user) {
+            session.user = null
+            redirect(action: "login")
         }
     }
 

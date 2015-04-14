@@ -19133,4 +19133,7 @@
       </prototype>
     </procedure>
   </data-source>
+  <data-source name="budgetoor dev" uuid="003f4311-855e-48f0-b775-78b1e6a67d6c">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
 </component>

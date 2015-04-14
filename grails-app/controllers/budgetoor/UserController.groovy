@@ -1,8 +1,9 @@
 package budgetoor
 
+import grails.transaction.Transactional
+import org.apache.commons.codec.digest.DigestUtils
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class UserController {
@@ -12,12 +13,13 @@ class UserController {
     def beforeInterceptor = {
         def user = session.user
         if(!user) {
-            chain(controller: 'login', action: 'login', model: [messages: ['Zostałeś wylogowany']])
+            flash.message = message(code: 'login.logged.out')
+            redirect(controller: 'login', action: 'login')
             return false
         }
         if(!user.admin) {
-            //message do wyświetlenia na liście
-            chain(controller: 'login', action: 'sample', model: [messages: ['']])
+            flash.message = message(code: 'access.denied')
+            redirect(controller: 'login', action: 'sample')
             return false
         }
     }
@@ -47,6 +49,7 @@ class UserController {
             return
         }
 
+        encryptPassword(userInstance)
         userInstance.save flush: true
 
         request.withFormat {
@@ -59,6 +62,7 @@ class UserController {
     }
 
     def edit(User userInstance) {
+        userInstance.password = null
         respond userInstance
     }
 
@@ -74,11 +78,12 @@ class UserController {
             return
         }
 
+        encryptPassword(userInstance)
         userInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
                 redirect userInstance
             }
             '*' { respond userInstance, [status: OK] }
@@ -97,7 +102,7 @@ class UserController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }
@@ -112,5 +117,10 @@ class UserController {
             }
             '*' { render status: NOT_FOUND }
         }
+    }
+
+    private def encryptPassword(User userInstance) {
+        def passwordHash = DigestUtils.sha512Hex(userInstance.password)
+        userInstance.password = passwordHash
     }
 }

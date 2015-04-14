@@ -20,7 +20,7 @@ environments {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:postgresql://localhost:5432/budgetoor"
             username = "postgres"
-            password = "postgres13"
+            password = "Chromna18a"
         }
     }
     test {
@@ -28,7 +28,7 @@ environments {
             dbCreate = "update"
             url = "jdbc:postgresql://localhost:5432/budgetoor"
             username = "postgres"
-            password = "postgres13"
+            password = "Chromna18a"
         }
     }
     production {
@@ -36,7 +36,7 @@ environments {
             dbCreate = "update"
             url = "jdbc:postgresql://localhost:5432/budgetoor"
             username = "postgres"
-            password = "postgres13"
+            password = "Chromna18a"
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                 jmxEnabled = true

@@ -8,15 +8,10 @@
 <div class="body">
     <g:form action="doLogin" method="post">
         <div class="dialog">
-            <p>Logowanie:</p>
+            <g:if test="${flash.message}">
+                <div class="message" role="alert">${flash.message}</div>
+            </g:if>
             <table class="userForm">
-                <tr>
-                    <td valign="middle" style="text-align: center">
-                        <g:each in="${messages}" var="message">
-                            ${message}<br>
-                        </g:each>
-                    </td>
-                </tr>
                 <tr class='prop'>
                     <td valign='top' style='text-align:left;' width='20%'>
                         <label for='login'>Login:</label>

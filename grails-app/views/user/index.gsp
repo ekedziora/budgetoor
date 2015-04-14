@@ -44,7 +44,7 @@
 					
 						<td>${fieldValue(bean: userInstance, field: "lastName")}</td>
 					
-						<td><g:formatBoolean boolean="${userInstance.admin}" /></td>
+						<td><g:checkBox name="admin" checked="${userInstance.admin}" disabled="true"/></td>
 					
 					</tr>
 				</g:each>

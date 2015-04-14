@@ -50,11 +50,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${userInstance?.admin}">
+				<g:if test="${userInstance?.admin != null}">
 				<li class="fieldcontain">
 					<span id="admin-label" class="property-label"><g:message code="user.admin.label" default="Admin" /></span>
 					
-						<span class="property-value" aria-labelledby="admin-label"><g:formatBoolean boolean="${userInstance?.admin}" /></span>
+						<span class="property-value" aria-labelledby="admin-label"><g:checkBox name="admin" disabled="true" checked="${userInstance?.admin}"/></span>
 					
 				</li>
 				</g:if>
