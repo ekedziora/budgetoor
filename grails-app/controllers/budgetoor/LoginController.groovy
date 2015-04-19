@@ -22,7 +22,13 @@ class LoginController {
         session.user = user
 
         if(user) {
-            redirect(action: "sample")
+            if(!user.active) {
+                flash.message = message(code: 'login.not.active')
+                redirect(action: 'login')
+            }
+            else {
+                redirect(action: "sample")
+            }
         }
         else {
             redirect(action: "login")
