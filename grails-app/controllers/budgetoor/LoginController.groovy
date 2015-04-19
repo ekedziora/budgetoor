@@ -8,13 +8,13 @@ class LoginController {
 
     def login() {
         if(session.user) {
-            redirect(action: "sample")
+            redirect(controller: 'payment')
         }
     }
 
     def doLogin() {
         if(session.user) {
-            redirect(action: "sample")
+            redirect(controller: 'payment')
         }
 
         def passwordSha = DigestUtils.sha512Hex(params['password'])
@@ -27,7 +27,7 @@ class LoginController {
                 redirect(action: 'login')
             }
             else {
-                redirect(action: "sample")
+                redirect(controller: 'payment')
             }
         }
         else {
@@ -41,8 +41,5 @@ class LoginController {
             session.user = null
             redirect(action: "login")
         }
-    }
-
-    def sample() {
     }
 }

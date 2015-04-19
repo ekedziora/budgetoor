@@ -18,7 +18,7 @@ class UserController {
         }
         if(!user.admin) {
             flash.message = message(code: 'access.denied')
-            redirect(controller: 'login', action: 'sample')
+            redirect(controller: 'payment')
             return false
         }
     }

@@ -73,7 +73,7 @@ class PaymentController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Payment.label', default: 'Payment'), paymentInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'payment.label', default: 'Payment'), paymentInstance.id])
                 redirect paymentInstance
             }
             '*' { respond paymentInstance, [status: OK] }
@@ -92,7 +92,7 @@ class PaymentController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Payment.label', default: 'Payment'), paymentInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'payment.label', default: 'Payment'), paymentInstance.id])
                 redirect action: "index", method: "GET"
             }
             '*' { render status: NO_CONTENT }

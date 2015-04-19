@@ -3,6 +3,7 @@
     <g:link controller="user">Użytkownicy</g:link>
 </g:if>
 <g:if test="${session.user}">
+    <g:link controller="payment">Płatności</g:link>
     <g:link controller="login" action="logout">Wyloguj</g:link>
 </g:if>
 <g:else>
