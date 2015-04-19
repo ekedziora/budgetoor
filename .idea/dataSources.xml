@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1164385314">
+  <component name="DataSourceManagerImpl" format="xml" hash="4134758683">
     <data-source source="LOCAL" name="PostgreSQL - budgetoor@localhost" uuid="8b90e93c-734d-41d6-be98-f18f8985e385">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
@@ -13,7 +13,11 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/budgetoor</jdbc-url>
-      <libraries />
+      <libraries>
+        <library>
+          <url>file://$MAVEN_REPOSITORY$/org/postgresql/postgresql/9.3-1101-jdbc41/postgresql-9.3-1101-jdbc41.jar</url>
+        </library>
+      </libraries>
     </data-source>
   </component>
 </project>

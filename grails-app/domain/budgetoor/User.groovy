@@ -20,6 +20,10 @@ class User {
         table 'users'
     }
 
+    static hasMany = [
+            payments : Payment
+    ]
+
     static constraints = {
         login(unique: true, nullable: false, blank: false)
         password(blank: false, password: true)
