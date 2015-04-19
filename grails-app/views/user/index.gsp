@@ -31,7 +31,11 @@
 						<g:sortableColumn property="lastName" title="${message(code: 'user.lastName.label', default: 'Last Name')}" />
 					
 						<g:sortableColumn property="admin" title="${message(code: 'user.admin.label', default: 'Admin')}" />
-					
+
+                        <g:sortableColumn property="active" title="${message(code: 'user.active.label', default: 'Active')}" />
+
+                        <th>${message(code: 'default.action.label', default: Action)}</th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -45,7 +49,15 @@
 						<td>${fieldValue(bean: userInstance, field: "lastName")}</td>
 					
 						<td><g:checkBox name="admin" checked="${userInstance.admin}" disabled="true"/></td>
-					
+
+                        <td><g:checkBox name="active" checked="${userInstance.active}" disabled="true"/></td>
+
+                        <td>
+                            <g:link action="activateOrDeactivate" resource="${userInstance}">
+                                ${message(code: userInstance.active ? 'default.deactivate.label' : 'default.activate.label', default: 'Activate/Deactivate')}
+                            </g:link>
+                        </td>
+
 					</tr>
 				</g:each>
 				</tbody>

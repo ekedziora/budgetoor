@@ -8,12 +8,11 @@ import static org.springframework.http.HttpStatus.*
 @Transactional(readOnly = true)
 class UserController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT"]
 
     def beforeInterceptor = {
         def user = session.user
         if(!user) {
-            flash.message = message(code: 'login.logged.out')
             redirect(controller: 'login', action: 'login')
             return false
         }
@@ -91,22 +90,17 @@ class UserController {
     }
 
     @Transactional
-    def delete(User userInstance) {
+    def activateOrDeactivate(User userInstance) {
 
-        if (userInstance == null) {
+        if(!userInstance) {
             notFound()
             return
         }
 
-        userInstance.delete flush: true
+        userInstance.active = !userInstance.active
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
-                redirect action: "index", method: "GET"
-            }
-            '*' { render status: NO_CONTENT }
-        }
+        flash.message = message(code: userInstance.active ? 'default.activate.message' : 'default.deactivate.message', args: [userInstance.firstAndLastName])
+        redirect action: "index", method: "GET"
     }
 
     protected void notFound() {

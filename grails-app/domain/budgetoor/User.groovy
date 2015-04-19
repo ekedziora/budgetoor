@@ -16,8 +16,11 @@ class User {
 
     Boolean admin
 
+    Boolean active = true
+
     static mapping = {
         table 'users'
+        sort 'login'
     }
 
     static hasMany = [
@@ -30,6 +33,11 @@ class User {
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
         admin(nullable: false)
+        active(nullable: false)
+    }
+
+    def getFirstAndLastName() {
+        firstName + ' ' + lastName
     }
 
     @Override

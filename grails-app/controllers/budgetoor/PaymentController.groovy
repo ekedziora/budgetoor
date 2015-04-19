@@ -12,7 +12,6 @@ class PaymentController {
     def beforeInterceptor = {
         def user = session.user
         if(!user) {
-            flash.message = message(code: 'login.logged.out')
             redirect(controller: 'login', action: 'login')
             return false
         }

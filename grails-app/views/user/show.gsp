@@ -58,14 +58,20 @@
 					
 				</li>
 				</g:if>
+
+                <g:if test="${userInstance?.active != null}">
+				<li class="fieldcontain">
+					<span id="active-label" class="property-label"><g:message code="user.active.label" default="Active" /></span>
+
+						<span class="property-value" aria-labelledby="active-label"><g:checkBox name="active" disabled="true" checked="${userInstance?.active}"/></span>
+
+				</li>
+				</g:if>
 			
 			</ol>
-			<g:form url="[resource:userInstance, action:'delete']" method="DELETE">
-				<fieldset class="buttons">
+			<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${userInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>
+			</fieldset>
 		</div>
 	</body>
 </html>
