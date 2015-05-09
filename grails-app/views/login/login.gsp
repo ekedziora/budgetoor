@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="body">
-    <g:form action="doLogin" method="post">
+    <g:form controller="login" action="doLogin" method="post">
         <div class="dialog">
             <g:if test="${flash.message}">
                 <div class="message" role="alert">${flash.message}</div>

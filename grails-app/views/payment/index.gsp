@@ -24,6 +24,30 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
+    <g:form controller="payment" action="index" method="GET" >
+        <fieldset>
+            <label for="descriptionFilter">
+                ${message(code: 'payment.description.label', default: 'Description')}
+            </label>
+            <g:textField id="descriptionFilter" name="descriptionFilter" value="${params.descriptionFilter}"/>
+
+            <label for="matchExactly">
+                ${message(code: 'default.match.exactly.label', default: 'Match exactly')}
+            </label>
+            <g:checkBox id="matchExactly" name="matchExactly" value="${params.matchExactly}" />
+        </fieldset>
+        <fieldset>
+            <label for="userFilter">
+                <g:message code="payment.user.label" default="User"/>
+            </label>
+            <g:select id="user" name="userFilter" value="${params.userFilter}" from="${budgetoor.User.list()}" optionKey="id"
+                      noSelection="${['':message(code: 'default.no.selection.label', default: '--- Select ---')]}"/>
+        </fieldset>
+        <fieldset>
+            <g:submitButton name="search" value="${message(code: 'default.button.search.label', default: 'Search')}"/>
+        </fieldset>
+    </g:form>
+    <br>
     <table>
         <thead>
         <tr>
@@ -41,10 +65,10 @@
         <g:each in="${paymentInstanceList}" status="i" var="paymentInstance">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
-                <td><g:link action="show"
-                            id="${paymentInstance.id}">${fieldValue(bean: paymentInstance, field: "user")}</g:link></td>
+                <td>${fieldValue(bean: paymentInstance, field: "user")}</td>
 
-                <td>${fieldValue(bean: paymentInstance, field: "description")}</td>
+                <td><g:link action="show"
+                            id="${paymentInstance.id}">${fieldValue(bean: paymentInstance, field: "description")}</g:link></td>
 
                 <td>${fieldValue(bean: paymentInstance, field: "amount")}</td>
 

@@ -1,6 +1,7 @@
 package budgetoor
 
 import grails.transaction.Transactional
+import org.apache.commons.lang.StringUtils
 
 import static org.springframework.http.HttpStatus.*
 
@@ -18,8 +19,30 @@ class PaymentController {
     }
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Payment.list(params), model: [paymentInstanceCount: Payment.count()]
+        params.max = Math.min(max ?: 25, 100)
+
+        def userId = params.getLong('userFilter')
+        def descriptionFilter = params.descriptionFilter
+        def matchExactly = params.getBoolean('matchExactly', Boolean.FALSE)
+
+        def payments = Payment.createCriteria().list(params) {
+            if (userId) {
+                user {
+                    eq("id", userId)
+                }
+            }
+
+            if (StringUtils.isNotBlank(descriptionFilter)) {
+                if(matchExactly) {
+                    eq("description", descriptionFilter)
+                }
+                else {
+                    ilike("description", "%${descriptionFilter}%")
+                }
+            }
+        }
+
+        respond payments, model: [paymentInstanceCount: payments.totalCount]
     }
 
     def show(Payment paymentInstance) {

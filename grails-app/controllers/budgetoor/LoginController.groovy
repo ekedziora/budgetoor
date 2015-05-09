@@ -26,9 +26,6 @@ class LoginController {
                 flash.message = message(code: 'login.not.active')
                 redirect(action: 'login')
             }
-            else {
-                redirect(controller: 'payment')
-            }
         }
         else {
             redirect(action: "login")
