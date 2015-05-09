@@ -38,7 +38,7 @@
         </fieldset>
         <fieldset>
             <label for="userFilter">
-                <g:message code="payment.user.label" default="User"/>
+                <g:message code="user.label" default="User"/>
             </label>
             <g:select id="user" name="userFilter" value="${params.userFilter}" from="${budgetoor.User.list()}" optionKey="id"
                       noSelection="${['':message(code: 'default.no.selection.label', default: '--- Select ---')]}"/>
@@ -52,7 +52,7 @@
         <thead>
         <tr>
 
-            <th><g:message code="payment.user.label" default="User"/></th>
+            <th><g:message code="user.label" default="User"/></th>
 
             <g:sortableColumn property="description"
                               title="${message(code: 'payment.description.label', default: 'Description')}"/>
