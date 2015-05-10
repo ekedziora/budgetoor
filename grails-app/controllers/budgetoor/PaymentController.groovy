@@ -21,15 +21,25 @@ class PaymentController {
     def index(Integer max) {
         params.max = Math.min(max ?: 25, 100)
 
-        def userId = params.getLong('userFilter')
+        def userIds = params.list('userFilter')*.toLong()
         def descriptionFilter = params.descriptionFilter
-        def matchExactly = params.getBoolean('matchExactly', Boolean.FALSE)
+        def matchExactly = params.boolean('matchExactly', Boolean.FALSE)
+        def amountFrom = convertToBigDecimal(params.amountFrom)
+        def amountTo = convertToBigDecimal(params.amountTo)
 
         def payments = Payment.createCriteria().list(params) {
-            if (userId) {
+            if (userIds) {
                 user {
-                    eq("id", userId)
+                    'in'("id", userIds)
                 }
+            }
+
+            if(amountFrom) {
+                ge("amount", amountFrom)
+            }
+
+            if(amountTo) {
+                le("amount", amountTo)
             }
 
             if (StringUtils.isNotBlank(descriptionFilter)) {
@@ -43,6 +53,14 @@ class PaymentController {
         }
 
         respond payments, model: [paymentInstanceCount: payments.totalCount]
+    }
+
+    BigDecimal convertToBigDecimal(String number) {
+        if(!number || !(number ==~ /^\d+(\.\d+)?$/)) {
+            return null
+        }
+
+        return new BigDecimal(number)
     }
 
     def show(Payment paymentInstance) {

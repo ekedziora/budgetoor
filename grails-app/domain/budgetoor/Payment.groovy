@@ -19,6 +19,6 @@ class Payment {
     static constraints = {
         user(nullable: false)
         description(nullable: false, blank: false)
-        amount(min: 0.0)
+        amount(min: 0.0, scale: 2)
     }
 }

@@ -15,6 +15,7 @@ class LoginController {
     def doLogin() {
         if(session.user) {
             redirect(controller: 'payment')
+            return
         }
 
         def passwordSha = DigestUtils.sha512Hex(params['password'])
@@ -26,10 +27,13 @@ class LoginController {
                 flash.message = message(code: 'login.not.active')
                 redirect(action: 'login')
             }
+            else {
+                redirect(controller: 'payment')
+            }
         }
         else {
-            redirect(action: "login")
             flash.message = message(code: 'login.bad.credentials')
+            redirect(action: "login")
         }
     }
 

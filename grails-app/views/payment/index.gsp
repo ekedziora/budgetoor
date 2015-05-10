@@ -5,6 +5,20 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'payment.label', default: 'Payment')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
+    <g:javascript library="jquery"/>
+    <g:javascript library="jquery-ui"/>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#accordion").accordion({
+                collapsible: true,
+                active: 0,
+                heightStyle: "content"
+            })
+        });
+    </script>
+
+    <r:layoutResources/>
 </head>
 
 <body>
@@ -23,29 +37,49 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    <g:form controller="payment" action="index" method="GET" >
-        <fieldset>
-            <label for="descriptionFilter">
-                ${message(code: 'payment.description.label', default: 'Description')}
-            </label>
-            <g:textField id="descriptionFilter" name="descriptionFilter" value="${params.descriptionFilter}"/>
+    <div id="accordion">
+        <h3>${message(code: 'default.balance.label', default: 'Balance')}</h3>
+        <div>
+            Tu bedzie bilans
+        </div>
+        <h3>${message(code: 'default.filters.label', default: 'Filters')}</h3>
+        <div>
+            <g:form controller="payment" action="index" method="GET">
+                <fieldset>
+                    <label for="descriptionFilter">
+                        ${message(code: 'payment.description.label', default: 'Description')}
+                    </label>
+                    <g:textField id="descriptionFilter" name="descriptionFilter" value="${params.descriptionFilter}"/>
 
-            <label for="matchExactly">
-                ${message(code: 'default.match.exactly.label', default: 'Match exactly')}
-            </label>
-            <g:checkBox id="matchExactly" name="matchExactly" value="${params.matchExactly}" />
-        </fieldset>
-        <fieldset>
-            <label for="userFilter">
-                <g:message code="user.label" default="User"/>
-            </label>
-            <g:select id="user" name="userFilter" value="${params.userFilter}" from="${budgetoor.User.list()}" optionKey="id"
-                      noSelection="${['':message(code: 'default.no.selection.label', default: '--- Select ---')]}"/>
-        </fieldset>
-        <fieldset>
-            <g:submitButton name="search" value="${message(code: 'default.button.search.label', default: 'Search')}"/>
-        </fieldset>
-    </g:form>
+                    <label for="matchExactly">
+                        ${message(code: 'default.match.exactly.label', default: 'Match exactly')}
+                    </label>
+                    <g:checkBox name="matchExactly" value="${params.matchExactly}"/>
+                </fieldset>
+                <fieldset>
+                    <label for="">
+                        ${message(code: 'payment.amount.label', default: 'Value') + ' ' + message(code: 'default.from.label', default: 'from')}
+                    </label>
+                    <g:field name="amountFrom" pattern="^\\d+(\\.\\d+)?\$" type="number decimal" min="0" value="${params.amountFrom}"/>
+                    <label for="">
+                        ${message(code: 'default.to.label', default: 'to')}
+                    </label>
+                    <g:field name="amountTo" pattern="^\\d+(\\.\\d+)?\$" type="number decimal" min="0" value="${params.amountTo}"/>
+                </fieldset>
+                <fieldset>
+                    <label for="userFilter">
+                        <g:message code="user.label" default="User"/>
+                    </label>
+                    <g:select id="user"  name="userFilter" value="${params.list('userFilter')*.toLong()}" from="${budgetoor.User.list()}"
+                              optionKey="id" multiple="true"/>
+                </fieldset>
+                <fieldset>
+                    <g:submitButton name="search"
+                                    value="${message(code: 'default.button.search.label', default: 'Search')}"/>
+                </fieldset>
+            </g:form>
+        </div>
+    </div>
     <br>
     <table>
         <thead>
