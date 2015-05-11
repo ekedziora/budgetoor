@@ -9,19 +9,6 @@ class BootStrap {
         def basia = new User(login: 'basia', password: 'pass', firstName: 'Barbara', lastName: 'Basia', admin: false).save()
         new Payment(amount: 11.4, description: 'desc', user: basia).save()
         new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
-        new Payment(amount: 22, description: 'desc2', user: ekedziora).save()
     }
     def destroy = {
     }

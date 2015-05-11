@@ -8,6 +8,8 @@ import static org.springframework.http.HttpStatus.*
 @Transactional(readOnly = true)
 class PaymentController {
 
+    PaymentService paymentService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def beforeInterceptor = {
@@ -52,7 +54,9 @@ class PaymentController {
             }
         }
 
-        respond payments, model: [paymentInstanceCount: payments.totalCount]
+        def balance = paymentService.getUserBalance(session.user)
+
+        respond payments, model: [paymentInstanceCount: payments.totalCount, userBalance: balance]
     }
 
     BigDecimal convertToBigDecimal(String number) {

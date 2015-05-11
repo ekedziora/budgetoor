@@ -39,8 +39,9 @@
     </g:if>
     <div id="accordion">
         <h3>${message(code: 'default.balance.label', default: 'Balance')}</h3>
-        <div>
-            Tu bedzie bilans
+        <div style="text-align: center">
+            Obecny bilans:
+            <span style="${userBalance.startsWith("+") ? 'color: green' : ''}${userBalance.startsWith("-") ? 'color: red' : ''}">${userBalance}</span>
         </div>
         <h3>${message(code: 'default.filters.label', default: 'Filters')}</h3>
         <div>
