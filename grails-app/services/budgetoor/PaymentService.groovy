@@ -28,7 +28,7 @@ class PaymentService {
 
         def balance = userSum.subtract(average)
         def compare = balance.compareTo(BigDecimal.ZERO)
-        def prefix
+        def prefix = ''
 
         if(compare > 0) {
             prefix = "+"
