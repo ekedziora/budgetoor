@@ -34,9 +34,11 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://localhost:5432/budgetoor"
-            username = "postgres"
-            password = "Chromna18a"
+            uri = new URI(System.env.DATABASE_URL?:"postgres://test:test@localhost/test")
+
+            url = "jdbc:postgresql://" + uri.host + ":" + uri.port + uri.path
+            username = uri.userInfo.split(":")[0]
+            password = uri.userInfo.split(":")[1]
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                 jmxEnabled = true
