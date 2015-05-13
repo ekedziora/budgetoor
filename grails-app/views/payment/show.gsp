@@ -24,7 +24,7 @@
 			
 				<g:if test="${paymentInstance?.user}">
 				<li class="fieldcontain">
-					<span id="user-label" class="property-label"><g:message code="payment.user.label" default="User" /></span>
+					<span id="user-label" class="property-label"><g:message code="user.label" default="User" /></span>
 					
 						<span class="property-value" aria-labelledby="user-label"><g:link controller="user" action="show" id="${paymentInstance?.user?.id}">${paymentInstance?.user?.encodeAsHTML()}</g:link></span>
 					

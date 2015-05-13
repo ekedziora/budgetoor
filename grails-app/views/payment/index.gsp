@@ -12,7 +12,7 @@
         $(function () {
             $("#accordion").accordion({
                 collapsible: true,
-                active: 0,
+                active: ${isAnyFilterSet ? 1 : 0},
                 heightStyle: "content"
             })
         });
@@ -41,7 +41,9 @@
         <h3>${message(code: 'default.balance.label', default: 'Balance')}</h3>
         <div style="text-align: center">
             Obecny bilans:
-            <span style="${userBalance.startsWith("+") ? 'color: green' : ''}${userBalance.startsWith("-") ? 'color: red' : ''}">${userBalance}</span>
+            <span style="${userBalance.compareTo(BigDecimal.ZERO) > 0 ? 'color: green' : ''}${userBalance.compareTo(BigDecimal.ZERO) < 0 ? 'color: red' : ''}">
+                ${userBalance.compareTo(BigDecimal.ZERO) > 0 ? '+' : ''}${userBalance.toString()}
+            </span>
         </div>
         <h3>${message(code: 'default.filters.label', default: 'Filters')}</h3>
         <div>
@@ -61,11 +63,11 @@
                     <label for="">
                         ${message(code: 'payment.amount.label', default: 'Value') + ' ' + message(code: 'default.from.label', default: 'from')}
                     </label>
-                    <g:field name="amountFrom" pattern="^\\d+(\\.\\d+)?\$" type="number decimal" min="0" value="${params.amountFrom}"/>
+                    <g:field name="amountFrom" pattern="${budgetoor.Payment.BIG_DECIMAL_REGEXP}" type="number decimal" min="0" value="${params.amountFrom}"/>
                     <label for="">
                         ${message(code: 'default.to.label', default: 'to')}
                     </label>
-                    <g:field name="amountTo" pattern="^\\d+(\\.\\d+)?\$" type="number decimal" min="0" value="${params.amountTo}"/>
+                    <g:field name="amountTo" pattern="${budgetoor.Payment.BIG_DECIMAL_REGEXP}" type="number decimal" min="0" value="${params.amountTo}"/>
                 </fieldset>
                 <fieldset>
                     <label for="userFilter">

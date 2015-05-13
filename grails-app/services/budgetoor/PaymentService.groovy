@@ -11,7 +11,7 @@ class PaymentService {
 
     }
 
-    String getUserBalance(User user) {
+    BigDecimal getUserBalance(User user) {
         if(!user) {
             return BigDecimal.ZERO
         }
@@ -20,24 +20,13 @@ class PaymentService {
         List<Payment> allPayments = Payment.findAllByUserInList(activeUsers)
         List<Payment> userPayments = Payment.findAllByUser(user)
 
-        BigDecimal paymentsSum = allPayments.amount.sum()
-        BigDecimal userSum = userPayments.amount.sum()
+        BigDecimal paymentsSum = allPayments ? allPayments.amount.sum() : BigDecimal.ZERO
+        BigDecimal userSum = userPayments ? userPayments.amount.sum() : BigDecimal.ZERO
 
         BigDecimal numberOfUsers = new BigDecimal(activeUsers.size())
-        BigDecimal average = paymentsSum.divide(numberOfUsers, 2, RoundingMode.HALF_UP)
+        BigDecimal average = numberOfUsers.compareTo(BigDecimal.ZERO) ? paymentsSum.divide(numberOfUsers, 2, RoundingMode.HALF_UP) : BigDecimal.ZERO
 
-        def balance = userSum.subtract(average)
-        def compare = balance.compareTo(BigDecimal.ZERO)
-        def prefix = ''
-
-        if(compare > 0) {
-            prefix = "+"
-        }
-        else if(compare < 0) {
-            prefix = "-"
-        }
-
-        return prefix + balance
+        return userSum.subtract(average)
     }
 
 }

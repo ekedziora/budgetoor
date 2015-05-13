@@ -2,6 +2,8 @@ package budgetoor
 
 class Payment {
 
+    public static final String BIG_DECIMAL_REGEXP = /^\d+((\.|,)\d+)?$/
+
     Long id
 
     Long version

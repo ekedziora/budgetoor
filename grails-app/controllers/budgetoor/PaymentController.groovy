@@ -28,23 +28,28 @@ class PaymentController {
         def matchExactly = params.boolean('matchExactly', Boolean.FALSE)
         def amountFrom = convertToBigDecimal(params.amountFrom)
         def amountTo = convertToBigDecimal(params.amountTo)
+        def isAnyFilterSet = false
 
         def payments = Payment.createCriteria().list(params) {
             if (userIds) {
+                isAnyFilterSet = true
                 user {
                     'in'("id", userIds)
                 }
             }
 
             if(amountFrom) {
+                isAnyFilterSet = true
                 ge("amount", amountFrom)
             }
 
             if(amountTo) {
+                isAnyFilterSet = true
                 le("amount", amountTo)
             }
 
             if (StringUtils.isNotBlank(descriptionFilter)) {
+                isAnyFilterSet = true
                 if(matchExactly) {
                     eq("description", descriptionFilter)
                 }
@@ -56,15 +61,15 @@ class PaymentController {
 
         def balance = paymentService.getUserBalance(session.user)
 
-        respond payments, model: [paymentInstanceCount: payments.totalCount, userBalance: balance]
+        respond payments, model: [paymentInstanceCount: payments.totalCount, userBalance: balance, isAnyFilterSet: isAnyFilterSet]
     }
 
     BigDecimal convertToBigDecimal(String number) {
-        if(!number || !(number ==~ /^\d+(\.\d+)?$/)) {
+        if(!number || !(number ==~ Payment.BIG_DECIMAL_REGEXP)) {
             return null
         }
 
-        return new BigDecimal(number)
+        return new BigDecimal(number.replace(',', '.'))
     }
 
     def show(Payment paymentInstance) {
@@ -81,6 +86,8 @@ class PaymentController {
             notFound()
             return
         }
+
+        paymentInstance.user = session.user
 
         if (paymentInstance.hasErrors()) {
             respond paymentInstance.errors, view: 'create'
