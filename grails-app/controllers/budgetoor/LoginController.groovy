@@ -18,9 +18,8 @@ class LoginController {
             return
         }
 
-        def passwordSha = DigestUtils.sha512Hex(params['password'])
-        def user = User.findWhere(login: params['login'], password: passwordSha)
-        session.user = user
+        def passwordSha = DigestUtils.sha512Hex(params.password)
+        def user = User.findWhere(login: params.login, password: passwordSha)
 
         if(user) {
             if(!user.active) {
@@ -28,6 +27,7 @@ class LoginController {
                 redirect(action: 'login')
             }
             else {
+                session.user = user
                 redirect(controller: 'payment')
             }
         }
@@ -40,7 +40,7 @@ class LoginController {
     def logout() {
         if(session.user) {
             session.user = null
-            redirect(action: "login")
         }
+        redirect(action: "login")
     }
 }

@@ -1,5 +1,6 @@
 package budgetoor
 
+import command.ChangePasswordCommand
 import grails.transaction.Transactional
 import org.apache.commons.codec.digest.DigestUtils
 
@@ -86,6 +87,42 @@ class UserController {
                 redirect userInstance
             }
             '*' { respond userInstance, [status: OK] }
+        }
+    }
+
+    def editPassword(User userInstance) {
+        respond new ChangePasswordCommand(userId: userInstance.id)
+    }
+
+    @Transactional
+    def updatePassword(ChangePasswordCommand command) {
+        if(command == null) {
+            notFound()
+            return
+        }
+
+        if(command.hasErrors()) {
+            respond command.errors, view: 'editPassword'
+            return
+        }
+
+        def user = User.get(command.userId)
+        if(!user) {
+            notFound()
+            return
+        }
+
+        user.password = command.newPassword
+        encryptPassword(user)
+
+        user.save flush: true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.password.message', args: [user.login])
+                redirect user
+            }
+            '*' { respond user, [status: OK] }
         }
     }
 

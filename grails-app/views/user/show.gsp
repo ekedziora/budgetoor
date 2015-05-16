@@ -70,6 +70,7 @@
 			</ol>
 			<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${userInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:link class="edit" action="editPassword" resource="${userInstance}"><g:message code="default.button.edit.password.label" default="Edit" /></g:link>
 			</fieldset>
 		</div>
 	</body>
