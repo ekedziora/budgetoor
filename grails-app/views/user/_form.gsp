@@ -11,15 +11,6 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
-	<label for="password">
-		<g:message code="user.password.label" default="Password" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="password" name="password" required="" value="${userInstance?.password}"/>
-
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'firstName', 'error')} required">
 	<label for="firstName">
 		<g:message code="user.firstName.label" default="First Name" />

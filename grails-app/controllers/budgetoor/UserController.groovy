@@ -62,7 +62,6 @@ class UserController {
     }
 
     def edit(User userInstance) {
-        userInstance.password = null
         respond userInstance
     }
 
@@ -78,7 +77,6 @@ class UserController {
             return
         }
 
-        encryptPassword(userInstance)
         userInstance.save flush: true
 
         request.withFormat {

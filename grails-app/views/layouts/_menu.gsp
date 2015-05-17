@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<g:if test="${session.user}">
+    ${message(code: 'default.login.as.label', default: "You're logged as: {0}", args: [session.user?.login])}
+</g:if>
 <g:if test="${session.user?.admin}">
     <g:link controller="user">Użytkownicy</g:link>
 </g:if>
