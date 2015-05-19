@@ -16,6 +16,7 @@ class Payment {
 
     static mapping = {
         table 'payments'
+        user lazy: false
     }
 
     static constraints = {

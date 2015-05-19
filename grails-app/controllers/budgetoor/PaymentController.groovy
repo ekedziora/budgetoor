@@ -80,6 +80,7 @@ class PaymentController {
         }
 
         paymentInstance.user = session.user
+        paymentInstance.validate()
 
         if (paymentInstance.hasErrors()) {
             respond paymentInstance.errors, view: 'create'

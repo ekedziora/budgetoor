@@ -1,5 +1,7 @@
 <%@ page import="budgetoor.Payment" %>
 
+<g:hiddenField name="user" value="${paymentInstance?.user?.id}"/>
+
 <div class="fieldcontain ${hasErrors(bean: paymentInstance, field: 'description', 'error')} required">
     <label for="description">
         <g:message code="payment.description.label" default="Description"/>
