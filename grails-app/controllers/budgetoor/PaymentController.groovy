@@ -12,14 +12,6 @@ class PaymentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def beforeInterceptor = {
-        def user = session.user
-        if(!user) {
-            redirect(controller: 'login', action: 'login')
-            return false
-        }
-    }
-
     def index(Integer max) {
         params.max = Math.min(max ?: 25, 100)
 

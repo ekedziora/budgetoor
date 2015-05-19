@@ -11,19 +11,6 @@ class UserController {
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
-    def beforeInterceptor = {
-        def user = session.user
-        if(!user) {
-            redirect(controller: 'login', action: 'login')
-            return false
-        }
-        if(!user.admin) {
-            flash.message = message(code: 'access.denied')
-            redirect(controller: 'payment')
-            return false
-        }
-    }
-
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond User.list(params), model: [userInstanceCount: User.count()]
