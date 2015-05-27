@@ -5,6 +5,7 @@
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'payment.label', default: 'Payment')}" />
+        <g:set var="userHasAccess" value="${session.user.equals(paymentInstance?.user)}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -26,7 +27,7 @@
 				<li class="fieldcontain">
 					<span id="user-label" class="property-label"><g:message code="user.label" default="User" /></span>
 					
-						<span class="property-value" aria-labelledby="user-label"><g:link controller="user" action="show" id="${paymentInstance?.user?.id}">${paymentInstance?.user?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="user-label"><g:fieldValue bean="${paymentInstance}" field="user" /></span>
 					
 				</li>
 				</g:if>
@@ -52,9 +53,11 @@
 			</ol>
 			<g:form url="[resource:paymentInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${paymentInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
+                    <g:if test="${userHasAccess}">
+					    <g:link class="edit" action="edit" resource="${paymentInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+					    <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                    </g:if>
+                </fieldset>
 			</g:form>
 		</div>
 	</body>
